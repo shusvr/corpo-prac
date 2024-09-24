@@ -1,3 +1,7 @@
+import 'package:corporative/models.dart';
+import 'package:corporative/puzzle_card.dart';
+import 'package:corporative/puzzle_page.dart';
+import 'package:corporative/puzzle_scaffold.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,124 +14,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ЭФБО-03-22',
+      title: 'Puzzle shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const PuzzleScaffold(
+        body: PuzzleListPage(),
+      ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class PuzzleListPage extends StatelessWidget {
+  const PuzzleListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(height: 80),
-            const Text(
-              'Авторизация',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+    return ListView.builder(
+      itemCount: puzzles.length,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PuzzlePage(
+                puzzle: puzzles[index],
               ),
             ),
-            const SizedBox(height: 120),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: "Логин",
-                filled: true,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide.none,
-                ),
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: "Пароль",
-                filled: true,
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide.none,
-                ),
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: false,
-                  onChanged: null,
-                ),
-                Text(
-                  'Запомнить меня',
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Text(
-                "Войти",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  side: const BorderSide(color: Colors.blue, width: 2),
-                ),
-              ),
-              child: const Text(
-                'Регистрация',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Восстановить пароль',
-                style: TextStyle(color: Colors.grey, fontSize: 18),
-              ),
-            ),
-          ],
+          );
+        },
+        child: PuzzleCard(
+          puzzle: puzzles[index],
         ),
       ),
     );
