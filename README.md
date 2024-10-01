@@ -1,7 +1,9 @@
-# Практическая работа 3
+# Практическая работа 4
 
 Выполнил: Шycтpов В.P.
 Группа: ЭФБO-03-22
 
-https://github.com/user-attachments/assets/6a619de1-22d7-4656-9d07-563e0255f0b9
+![img1](doc/prac4/img1.png)
+![img2](doc/prac4/img2.png)
+![img3](doc/prac4/img3.png)
 

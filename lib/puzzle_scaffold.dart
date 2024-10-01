@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 class PuzzleScaffold extends StatelessWidget {
-  const PuzzleScaffold({super.key, required this.body});
+  const PuzzleScaffold(
+      {super.key, required this.body, this.title, this.floatingActionButton});
 
   final Widget body;
+  final String? title;
+  final FloatingActionButton? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Puzzle shop"),
+        title: Text(title != null ? title! : "Puzzle shop"),
       ),
       body: body,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

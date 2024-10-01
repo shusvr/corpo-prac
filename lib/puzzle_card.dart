@@ -2,9 +2,14 @@ import 'package:corporative/models.dart';
 import 'package:flutter/material.dart';
 
 class PuzzleCard extends StatelessWidget {
-  const PuzzleCard({super.key, required this.puzzle});
+  const PuzzleCard({
+    super.key,
+    required this.puzzle,
+    required this.onDeletePuzzle,
+  });
 
   final Puzzle puzzle;
+  final Function() onDeletePuzzle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +25,46 @@ class PuzzleCard extends StatelessWidget {
                 child: Image.network(puzzle.imageUrl),
               ),
               const SizedBox(height: 16.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  puzzle.title,
-                  style: const TextStyle(fontSize: 21),
-                ),
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    puzzle.title,
+                    style: const TextStyle(
+                        overflow: TextOverflow.clip, fontSize: 21),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red[500]),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Remove the puzzle'),
+                            content: const Text(
+                                'Are you sure you want to remove this puzzle'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  onDeletePuzzle();
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
+              )
             ],
           ),
         ),
