@@ -2,6 +2,7 @@ import 'package:corporative/models.dart';
 import 'package:corporative/pages/add_puzzle_page.dart';
 import 'package:corporative/pages/all_puzzles_page.dart';
 import 'package:corporative/pages/favourites_page.dart';
+import 'package:corporative/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -123,7 +124,9 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
                       .toList(growable: false),
                   toggleFavourite: _toggleFavourite,
                 )
-              : null,
+              : page == 2
+                  ? const ProfilePage()
+                  : null,
     );
   }
 }
