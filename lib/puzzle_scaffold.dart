@@ -17,6 +17,13 @@ class PuzzleScaffold extends StatelessWidget {
       ),
       body: body,
       floatingActionButton: floatingActionButton,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Puzzles"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: "Favourite"),
+        ],
+      ),
     );
   }
 }

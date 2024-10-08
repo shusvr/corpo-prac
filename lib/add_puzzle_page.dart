@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:corporative/models.dart';
 import 'package:corporative/puzzle_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,8 @@ class _AddPuzzlePageState extends State<AddPuzzlePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           var puzzle = Puzzle(
+            // whatever
+            id: Random().nextInt(100000),
             title: _title.text,
             price: _price.text,
             // imageUrl: _url.text,

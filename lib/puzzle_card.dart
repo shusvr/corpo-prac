@@ -5,11 +5,13 @@ class PuzzleCard extends StatelessWidget {
   const PuzzleCard({
     super.key,
     required this.puzzle,
-    required this.onDeletePuzzle,
+    required this.onFavourited,
+    required this.isFavourite,
   });
 
   final Puzzle puzzle;
-  final Function() onDeletePuzzle;
+  final bool isFavourite;
+  final VoidCallback onFavourited;
 
   @override
   Widget build(BuildContext context) {
@@ -24,46 +26,29 @@ class PuzzleCard extends StatelessWidget {
                 tag: puzzle.imageUrl,
                 child: Image.network(puzzle.imageUrl),
               ),
-              const SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    puzzle.title,
-                    style: const TextStyle(
-                        overflow: TextOverflow.clip, fontSize: 21),
+              Text(
+                puzzle.title,
+                maxLines: 1,
+                style: const TextStyle(
+                  overflow: TextOverflow.clip,
+                  fontSize: 21,
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    onPressed: onFavourited,
+                    icon: Icon(
+                      isFavourite ? Icons.favorite : Icons.favorite_border,
+                    ),
+                    style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        iconColor: isFavourite
+                            ? WidgetStateProperty.all(Colors.red)
+                            : null),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red[500]),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Remove the puzzle'),
-                            content: const Text(
-                                'Are you sure you want to remove this puzzle'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  onDeletePuzzle();
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Remove'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                  )
-                ],
+                ),
               )
             ],
           ),

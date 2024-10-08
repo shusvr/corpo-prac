@@ -1,8 +1,7 @@
 import 'package:corporative/add_puzzle_page.dart';
 import 'package:corporative/models.dart';
-import 'package:corporative/puzzle_card.dart';
-import 'package:corporative/puzzle_page.dart';
-import 'package:corporative/puzzle_scaffold.dart';
+import 'package:corporative/pages/all_puzzles_page.dart';
+import 'package:corporative/pages/favourites_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,6 +28,7 @@ class MyApp extends StatelessWidget {
 class _PuzzleListPageState extends State<PuzzleListPage> {
   List<Puzzle> puzzles = [
     Puzzle(
+      id: 1,
       title: "Gan 249 2x2x2 v2",
       description: genericDescription,
       imageUrl:
@@ -37,6 +37,7 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
       price: "159.99",
     ),
     Puzzle(
+      id: 2,
       title: "YJ 3x3x3 MGC v2",
       description: genericDescription,
       imageUrl:
@@ -45,6 +46,7 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
       price: "329.99",
     ),
     Puzzle(
+      id: 3,
       title: "QiYi MoFangGe 4x4x4 WuQue Mini M",
       description: genericDescription,
       imageUrl:
@@ -53,6 +55,7 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
       price: "989.90",
     ),
     Puzzle(
+      id: 4,
       title: "QiYi MoFangGe Megaminx QiHeng (S)",
       description: genericDescription,
       imageUrl:
@@ -61,34 +64,36 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
     )
   ];
 
+  int page = 0;
+  Set<int> favourites = {};
+
   void _addPuzzle(Puzzle puzzle) {
     setState(() => puzzles.add(puzzle));
   }
 
-  void _removePuzzle(int index) {
-    setState(() => puzzles.removeAt(index));
+  void _toggleFavourite(int favId) {
+    if (!favourites.contains(favId)) {
+      setState(() => favourites.add(favId));
+    } else {
+      setState(() => favourites.remove(favId));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return PuzzleScaffold(
-      body: ListView.builder(
-        itemCount: puzzles.length,
-        itemBuilder: (context, index) => GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PuzzlePage(
-                  puzzle: puzzles[index],
-                ),
-              ),
-            );
-          },
-          child: PuzzleCard(
-            puzzle: puzzles[index],
-            onDeletePuzzle: () => _removePuzzle(index),
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Puzzle shop"),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (idx) => setState(() => page = idx),
+        currentIndex: page,
+        items: const [
+          BottomNavigationBarItem(label: "Puzzles", icon: Icon(Icons.list)),
+          BottomNavigationBarItem(
+              label: "Favourites", icon: Icon(Icons.favorite)),
+          BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(
@@ -100,6 +105,20 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
         ),
         child: const Icon(Icons.add),
       ),
+      body: page == 0
+          ? AllPuzzlesPage(
+              puzzles: puzzles,
+              isFavourite: (idx) => favourites.contains(idx),
+              toggleFavourite: _toggleFavourite,
+            )
+          : page == 1
+              ? FavouritesPage(
+                  favourites: puzzles
+                      .where((el) => favourites.contains(el.id))
+                      .toList(growable: false),
+                  toggleFavourite: _toggleFavourite,
+                )
+              : null,
     );
   }
 }
