@@ -1,15 +1,27 @@
 import 'package:corporative/models.dart';
-import 'package:corporative/puzzle_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class PuzzlePage extends StatelessWidget {
-  const PuzzlePage({super.key, required this.puzzle});
+  const PuzzlePage(
+      {super.key, required this.puzzle, required this.removePuzzle});
 
   final Puzzle puzzle;
+  final Function() removePuzzle;
 
   @override
   Widget build(BuildContext context) {
-    return PuzzleScaffold(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(puzzle.title),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          removePuzzle();
+          Navigator.of(context).pop();
+        },
+        child: const Icon(Icons.delete),
+      ),
       body: Column(
         children: [
           Hero(

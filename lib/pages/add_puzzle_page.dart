@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:corporative/models.dart';
-import 'package:corporative/puzzle_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class AddPuzzlePage extends StatefulWidget {
@@ -32,8 +30,10 @@ class _AddPuzzlePageState extends State<AddPuzzlePage> {
 
   @override
   Widget build(BuildContext context) {
-    return PuzzleScaffold(
-      title: "Add new puzzle",
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add new puzzle"),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           var puzzle = Puzzle(

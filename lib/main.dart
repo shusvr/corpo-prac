@@ -1,5 +1,5 @@
-import 'package:corporative/add_puzzle_page.dart';
 import 'package:corporative/models.dart';
+import 'package:corporative/pages/add_puzzle_page.dart';
 import 'package:corporative/pages/all_puzzles_page.dart';
 import 'package:corporative/pages/favourites_page.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +71,10 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
     setState(() => puzzles.add(puzzle));
   }
 
+  void _removePuzzle(int id) {
+    setState(() => puzzles.removeWhere((el) => el.id == id));
+  }
+
   void _toggleFavourite(int favId) {
     if (!favourites.contains(favId)) {
       setState(() => favourites.add(favId));
@@ -110,6 +114,7 @@ class _PuzzleListPageState extends State<PuzzleListPage> {
               puzzles: puzzles,
               isFavourite: (idx) => favourites.contains(idx),
               toggleFavourite: _toggleFavourite,
+              removePuzzle: _removePuzzle,
             )
           : page == 1
               ? FavouritesPage(
