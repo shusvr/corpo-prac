@@ -1,9 +1,10 @@
-# Практическая работа 4
+# Практическая работа 5
 
 Выполнил: Шycтpов В.P.
 Группа: ЭФБO-03-22
 
-![img1](doc/prac4/img1.png)
-![img2](doc/prac4/img2.png)
-![img3](doc/prac4/img3.png)
+<img width="300px" src="doc/prac5/flutter_01.png" />
+<img width="300px" src="doc/prac5/flutter_02.png" />
+<img width="300px" src="doc/prac5/flutter_03.png" />
+<img width="300px" src="doc/prac5/flutter_04.png" />
 
